@@ -1,0 +1,29 @@
+name: Run Batch Scraper
+
+on:
+  push:
+    branches:
+      - main # Run the workflow when changes are pushed to the main branch
+  workflow_dispatch: # Allow manual triggering of the workflow
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3 # Check out the repository code
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9' # Specify the Python version
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt # Install requirements from the root
+
+    - name: Run Batch Scraper
+      run: |
+        python app/batch_scrape.py # Run the script
