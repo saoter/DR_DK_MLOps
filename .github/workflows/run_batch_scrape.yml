@@ -1,10 +1,7 @@
 name: Run Batch Scraper and Save Files
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   run-scraper:
@@ -29,12 +26,12 @@ jobs:
         python app/batch_scrape.py
 
     - name: Commit and Push Results
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
         git add scraped_data.json scraped_data.csv
         git commit -m "Add scraped data files"
         git push
-      env:
-        # Provide the GitHub token to allow pushing changes
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
