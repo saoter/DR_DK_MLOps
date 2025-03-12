@@ -2,7 +2,9 @@
 name: Run Batch Scraper and Save Files 2
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 5,17 * * *'
 
 jobs:
   run-scraper:
