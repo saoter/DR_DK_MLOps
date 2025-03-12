@@ -1,0 +1,3 @@
+This is the first version...
+
+It has Github action that scrapes articles and save them back to repository
